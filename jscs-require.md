@@ -1,3 +1,4 @@
+
 Requires proper alignment in object literals.
 
 Type: `String`
@@ -29,6 +30,45 @@ var x = {
     ef : 'str'
 };
 ```
+
+
+
+Requires that a function expression be anonymous.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"requireAnonymousFunctions": true
+```
+
+##### Valid
+
+```js
+var a = function(){
+
+};
+
+$('#foo').click(function(){
+
+})
+```
+
+##### Invalid
+
+```js
+var a = function foo(){
+
+};
+
+$('#foo').click(function bar(){
+
+});
+```
+
 
 Requires blocks to begin and end with a newline
 
@@ -74,8 +114,6 @@ var abc = function() {};
 ```js
 if (true) { doSomething(); doSomethingElse(); }
 ```
-
-
 
 
 Requires identifiers to be camelCased or UPPERCASE_WITH_UNDERSCORES
@@ -135,7 +173,6 @@ var snake_case = { snake_case: 6 };
 ```
 
 
-
 Requires the first alphabetical character of a comment to be uppercase, unless it is part of a multi-line textblock.
 
 By default, the prefix for inline comments `jscs` is ignored.
@@ -159,11 +196,11 @@ Valid:
 
 /*
   Valid
-\/
+ *\/
 
-
-Valid
-\/
+/**
+ * Valid
+ *\/
 
 // A textblock is a set of lines
 // that starts with a capitalized letter
@@ -182,10 +219,10 @@ Invalid:
 ```
 // invalid
 //invalid
- invalid\/
-
-invalid
-\/
+/** invalid *\/
+/**
+ * invalid
+ *\/
 ```
 
 ```js
@@ -196,7 +233,7 @@ Valid:
 
 ```
 function sayHello() {
-    \/* jshint: -W071\/
+    \/* jshint: -W071 *\/
 
     // I can now say hello in lots of statements, if I like.
     return "Hello";
@@ -207,7 +244,7 @@ function sayHello() {
 
 ```
 function sayHello() {
-    \/* jshint: -W071\/
+    \/* jshint: -W071 *\/
 
     // i can now say hello in lots of statements, if I like.
     return "Hello";
@@ -218,14 +255,12 @@ function sayHello() {
 
 ```
 function sayHello() {
-    \/* istanbul ignore next\/
+    \/* istanbul ignore next *\/
 
     // I'd like to ignore this statement in coverage reports.
     return "Hello";
 }
 ```
-
-
 
 
 
@@ -261,8 +296,6 @@ var d = new e();
 ```
 
 
-
-
 Requires commas as last token on a line in lists.
 
 Type: `Boolean`
@@ -295,8 +328,6 @@ var x = {
     , two: 2
 };
 ```
-
-
 
 
 Requires curly braces after statements.
@@ -336,7 +367,6 @@ if (x) {
 ```js
 if (x) x++;
 ```
-
 
 
 Require a $ before variable names that are jquery assignments.
@@ -588,6 +618,19 @@ var a, b, c,
 
 
 
+Requires placing line feed at file end.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"requireLineFeedAtFileEnd": true
+```
+
+
 Requires multiple `var` declaration.
 
 Types: `Boolean` or `String`
@@ -618,8 +661,6 @@ var x = 1,
 var x = 1;
 var y = 2;
 ```
-
-
 
 
 Require unassigned functions to be named inline
@@ -887,7 +928,7 @@ var foo = [
     }
 ];
 ```
-* ##### Valid for `{ "allExcept": ["inProperties"] }`
+#### Valid for `{ "allExcept": ["inProperties"] }`
 
 ```js
 var foo = {
@@ -1276,7 +1317,7 @@ var a = 1;
 ```js
 var a = 1
 ```
-*/
+
 
 
 Disallows sticking binary operators to the right.
@@ -1489,7 +1530,7 @@ Type: `Boolean` or `Integer`
 Values:
 
 - `true` require a single space
-- `Integer` requireat least* specified number of spaces
+- `Integer` require *at least* specified number of spaces
 
 #### Example
 
@@ -1784,8 +1825,6 @@ for(var i = 0;i<l; i++) {
     x++;
 }
 ```
-
-
 
 
 Requires space before `()` or `{}` in function declarations.
@@ -2180,7 +2219,6 @@ if (a == 1) {
 ```
 
 
-
 Option to check `var that = this` expressions
 
 Types: `Array` or `String`
@@ -2204,7 +2242,6 @@ var that = this;
 ```js
 var _this = this;
 ```
-
 
 
 
@@ -2350,8 +2387,6 @@ x++;
 var x = 1;<CRLF>
 x++;
 ```
-
-
 
 
 Requires each element in array on a single line when array length is more than passed maximum
@@ -2520,5 +2555,3 @@ var x = 'x';
 ```js
 var x = "x", y = 'y';
 ```
-
-

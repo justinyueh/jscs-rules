@@ -1,3 +1,41 @@
+
+Requires that a function expression be named.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowAnonymousFunctions": true
+```
+
+##### Valid
+
+```js
+var a = function foo(){
+
+};
+
+$('#foo').click(function bar(){
+
+});
+```
+
+##### Invalid
+
+```js
+var a = function(){
+
+};
+
+$('#foo').click(function(){
+
+});
+```
+
+
 Requires the first alphabetical character of a comment to be lowercase.
 
 Type: `Boolean`
@@ -16,11 +54,11 @@ Valid:
 
 /*
   valid
-\/
+ *\/
 
-
-valid
-\/
+/**
+ * valid
+ *\/
 
 // 123 or any non-alphabetical starting character
 ```
@@ -29,29 +67,30 @@ Invalid:
 ```
 // Invalid
 //Invalid
- Invalid\/
-
-Invalid
-\/
+/** Invalid *\/
+/**
+ * Invalid
+ *\/
 ```
 
- 
- 
+
+
 Disallows commas as last token on a line in lists.
- 
+
 Type: `Boolean`
- 
+
 Value: `true`
- 
+
 JSHint: [`laxcomma`](http://www.jshint.com/docs/options/#laxcomma)
- 
+
 #### Example
- 
-```js"disallowCommaBeforeLineBreak": true
+
+```js
+"disallowCommaBeforeLineBreak": true
 ```
 
 ##### Valid
- 
+
 ```js
 var x = {
     one: 1
@@ -68,8 +107,43 @@ var x = {
     two: 2
 };
 ```
- 
-  
+
+
+
+Disallows curly braces after statements.
+
+Types: `Array` or `Boolean`
+
+Values: Array of quoted keywords or `true` to disallow curly braces after the following keywords:
+
+#### Example
+
+```js
+"disallowCurlyBraces": [
+    "if",
+    "else",
+    "while",
+    "for",
+    "do",
+    "with"
+]
+```
+
+##### Valid
+
+```js
+if (x) x++;
+```
+
+##### Invalid
+
+```js
+if (x) {
+    x++;
+}
+```
+
+
 
 Disallows identifiers that start or end in `_`. Some popular identifiers are automatically listed as exceptions:
 
@@ -115,7 +189,7 @@ var x_ = 1;
 var x_y_ = 1;
 ```
 
- 
+
 
 Disallows empty blocks (except for catch blocks).
 
@@ -144,7 +218,136 @@ try { a = b; } catch( e ){}
 if ( a == b ) { } else { c = d; }
 ```
 
- 
+
+
+Disallows function declarations.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowFunctionDeclarations": true
+```
+
+##### Valid
+
+```js
+var expressed = function() {
+
+};
+
+var expressed = function deeply() {
+
+};
+
+$('#foo').click(function bar() {
+
+};)
+```
+
+##### Invalid
+
+```js
+function stated() {
+
+}
+```
+
+
+
+Disallows a specified set of identifier names.
+
+Type: `Array`
+
+Values: Array of strings, which should be disallowed as identifier names
+
+#### Example
+
+```js
+"disallowIdentifierNames": ['temp', 'foo']
+```
+
+##### Valid
+
+```js
+var good = 1;
+object['fine'] = 2;
+object.fine = 3;
+```
+
+##### Invalid
+
+```js
+var temp = 1;
+object['foo'] = 2;
+object.foo = 3;
+```
+
+
+
+Disallows implicit type conversion.
+
+Type: `Array`
+
+Values: Array of quoted types
+
+#### Example
+
+```js
+"disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"]
+```
+
+##### Valid
+
+```js
+x = Boolean(y);
+x = Number(y);
+x = String(y);
+x = s.indexOf('.') !== -1;
+```
+
+##### Invalid
+
+```js
+x = !!y;
+x = +y;
+x = '' + y;
+x = ~s.indexOf('.');
+```
+
+
+
+Disallows keywords in your comments, such as TODO or FIXME
+
+Types: `Boolean`, `String` or `Array`
+
+Values:
+- `true`
+- `'\b(word1|word2)\b'`
+- `['word1', 'word2']`
+
+#### Examples
+
+```js
+"disallowKeywordsInComments": true
+"disallowKeywordsInComments": "\\b(word1|word2)\\b"
+"disallowKeywordsInComments": ["word1", "word2"]
+```
+
+#### Invalid:
+```
+// ToDo
+//TODO
+/** fixme *\/
+/**
+ * FIXME
+ *\/
+```
+
+
 
 Disallows placing keywords on a new line.
 
@@ -179,7 +382,29 @@ else {
 }
 ```
 
- 
+
+
+Disallows usage of specified keywords.
+
+Type: `Array`
+
+Values: Array of quoted keywords
+
+#### Example
+
+```js
+"disallowKeywords": ["with"]
+```
+
+##### Invalid
+
+```js
+with (x) {
+    prop++;
+}
+```
+
+
 
 Requires lines to not contain both spaces and tabs consecutively,
 or spaces after tabs only for alignment if "smart"
@@ -201,7 +426,7 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 ```js
 \tvar foo = "blah blah";
 \s\s\s\svar foo = "blah blah";
-\t
+\t/**
 \t\s*
 \t\s*\/ //a single space to align the star in a multi-line comment is allowed
 ```
@@ -219,7 +444,7 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 \tvar foo = "blah blah";
 \t\svar foo = "blah blah";
 \s\s\s\svar foo = "blah blah";
-\t
+\t/**
 \t\s*
 \t\s*\/ //a single space to align the star in a multi-line comment is allowed
 ```
@@ -229,7 +454,6 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 ```js
 \s\tsvar foo = "blah blah";
 ```
-
 
 
 Disallows multiple blank lines in a row.
@@ -259,7 +483,7 @@ var x = 1;
 x++;
 ```
 
- 
+
 
 Disallows strings that span multiple lines without using concatenation.
 
@@ -288,7 +512,7 @@ var x = "multi \
         line";
 ```
 
- 
+
 
 Disallows multiple indentation characters (tabs or spaces) between identifiers, keywords, and any other token
 
@@ -368,7 +592,6 @@ var x, y = 2, z;
 ```
 
 
-
 Disallows unassigned functions to be named inline
 
 Type: `Boolean`
@@ -393,7 +616,7 @@ function y() {}
 [].forEach(function x() {});
 ```
 
- 
+
 
 Disallows newline before opening curly brace of all block statements.
 
@@ -465,6 +688,61 @@ while (cond)
 ```
 
 
+Disallows the not, not equals, and strict not equals operators in conditionals.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowNotOperatorsInConditionals": true
+```
+
+##### Valid
+
+```js
+if (clause) {
+    // Do something really crazy
+} else {
+    // Do something crazy
+}
+
+if (a == 1) {
+    // Do something really crazy
+} else {
+    // Do something crazy
+}
+
+var a = (clause) ? 1 : 0
+```
+
+##### Invalid
+
+```js
+if (!clause) {
+    // Do something crazy
+} else {
+    // Do something really crazy
+}
+
+if (a != 1) {
+    // Do something crazy
+} else {
+    // Do something really crazy
+}
+
+if (a !== 1) {
+    // Do something crazy
+} else {
+    // Do something really crazy
+}
+
+var a = (!clause) ? 0 : 1
+```
+
+
 
 Requires putting certain operators on the next line rather than on the current line before a line break.
 
@@ -498,7 +776,7 @@ var x = 4 + 5 +
 	12 + 13;
 ```
 
- 
+
 
 Disallow a newline after blocks
 
@@ -558,7 +836,6 @@ function () {
 ```
 
 
-
 Disallow a blank line after `'use strict';` statements
 
 Values: `true`
@@ -583,7 +860,6 @@ Values: `true`
 
 // code
 ```
-
 
 
 Disallows newline before module.exports
@@ -612,7 +888,6 @@ var a = 2;
 
 module.exports = a;
 ```
-
 
 
 Disallow an empty line above the specified keywords.
@@ -679,7 +954,6 @@ function(a) {
 ```
 
 
-
 Disallows newline before line comments
 
 Type: `Boolean`
@@ -708,7 +982,6 @@ var a = 2;
 //comment
 return a;
 ```
-
 
 
 Disallows blocks from beginning or ending with 2 newlines.
@@ -744,8 +1017,6 @@ if (true) {
 ```
 
 
-
-
 Disallows newline inside curly braces of all objects.
 
 Type: `Boolean`
@@ -777,7 +1048,6 @@ foo({
     }
 });
 ```
-
 
 
 Disallows quoted keys in object if possible.
@@ -814,6 +1084,69 @@ var x = {a: 1, 'default': 2};
 var x = {'a': 1};
 ```
 
+
+Disallows lines from ending in a semicolon.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowSemicolons": true
+```
+
+##### Valid
+
+```js
+var a = 1
+;[b].forEach(c)
+```
+
+##### Invalid
+
+```js
+var a = 1;
+[b].forEach(c);
+```
+
+
+Requires sticking binary operators to the right.
+
+Types: `Array` or `Boolean`
+
+Values: Array of quoted operators or `true` to disallow space after all possible binary operators
+
+#### Example
+
+```js
+"disallowSpaceAfterBinaryOperators": [
+    "=",
+    ",",
+    "+",
+    "-",
+    "/",
+    "*",
+    "==",
+    "===",
+    "!=",
+    "!=="
+    // etc
+]
+```
+
+##### Valid
+
+```js
+x +y;
+```
+
+##### Invalid
+
+```js
+x+ y;
+```
 
 
 Disallows space after keyword.
@@ -853,7 +1186,7 @@ if (x > y) {
 }
 ```
 
- 
+
 
 Requires that a line comment (`//`) not be followed by a space.
 
@@ -881,7 +1214,6 @@ Value: `true`
 ```
 
 
-
 Disallows space after object keys.
 
 Types: `Boolean` or `String`
@@ -907,7 +1239,6 @@ var x = {a : 1};
 ```
 
 
-
 Requires sticking unary operators to the right.
 
 Types: `Array` or `Boolean`
@@ -931,7 +1262,6 @@ x = !y; y = ++z;
 ```js
 x = ! y; y = ++ z;
 ```
-
 
 
 
@@ -970,7 +1300,6 @@ x+ y;
 ```js
 x + y;
 ```
-
 
 
 Disallows space before block statements (for loops, control structures).
@@ -1022,7 +1351,6 @@ while (cond) {
 ```
 
 
-
 Disallows space before keyword.
 
 Types: `Array` or `Boolean`
@@ -1053,7 +1381,6 @@ Values: Array of quoted keywords or `true` to disallow spaces before all possibl
     y--;
 }
 ```
-
 
 
 Disallows space after object keys.
@@ -1105,7 +1432,6 @@ x = y ++; y = z --;
 ```
 
 
-
 Ensure there are no spaces after argument separators in call expressions.
 
 Type: `Boolean`
@@ -1129,7 +1455,6 @@ a(b,c);
 ```js
 a(b, c);
 ```
-
 
 
 Disallows space before `()` or `{}` in anonymous function expressions.
@@ -1169,8 +1494,6 @@ array.map(function() {});
 ```
 
 
-
-
 Disallows space before `()` in call expressions.
 
 Type: `Boolean`
@@ -1194,7 +1517,6 @@ var x = foobar();
 ```js
 var x = foobar ();
 ```
-
 
 
 Disallows space before and/or after `?` or `:` in conditional expressions.
@@ -1240,7 +1562,6 @@ var a = b? c:d;
 var a = b?c :d;
 var a = b?c: d;
 ```
-
 
 
 Disallow spaces in between for statement.
@@ -1394,8 +1715,6 @@ function a() {}
 function a (){}
 function a () {}
 ```
-
-
 
 
 Disallows space before `()` or `{}` in named function expressions.
@@ -1576,7 +1895,7 @@ Values: Either `true` or Object with `"only"` property as an array of tokens
 ##### Valid for `true` value
 
 ```js
-var x = (1 + 2)3;
+var x = (1 + 2) * 3;
 ```
 
 ##### Valid for `only` value
@@ -1625,8 +1944,6 @@ var bar = {a: "a", b: "b"}
 var foo = [1, 2, 3, ];
 var bar = {a: "a", b: "b", }
 ```
-
-
 
 
 Requires all lines to end on a non-whitespace character
@@ -1736,5 +2053,20 @@ var aLineOf40Chars = 123456789012345678;
 
 ```js
 var aLineOf41Chars = 1234567890123456789;
+```
+
+
+
+Requires the file to be at most the number of lines specified
+
+Type: `Integer`
+
+Values:
+- `Integer`: file should be at most the number of lines specified
+
+#### Example
+
+```js
+"maximumNumberOfLines": 100
 ```
 
