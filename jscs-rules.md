@@ -427,23 +427,6 @@ var y = 2;
 for (var i = 0, j = arr.length; i < j; i++) {}
 ```
 
-##### Valid for `strict`
-
-```js
-var x = 1;
-var y = 2;
-```
-
-##### Valid for `exceptUndefined`
-
-```js
-var a, b;
-var x = 1;
-var y = 2;
-
-for (var i = 0, j = arr.length; i < j; i++) {}
-```
-
 ##### Invalid
 
 ```js
