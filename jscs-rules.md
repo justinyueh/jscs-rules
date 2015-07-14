@@ -234,8 +234,8 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 ##### Valid example for mode `true`
 
 ```js
-\tvar foo = "blah blah";
-\s\s\s\svar foo = "blah blah";
+\tvar foo = 'blah blah';
+\s\s\s\svar foo = 'blah blah';
 \t/**
 \t\s*
 \t\s*\/ //a single space to align the star in a multi-line comment is allowed
@@ -244,16 +244,16 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 ##### Invalid example for mode `true`
 
 ```js
-\t\svar foo = "blah blah";
-\s\tsvar foo = "blah blah";
+\t\svar foo = 'blah blah';
+\s\tsvar foo = 'blah blah';
 ```
 
 ##### Valid example for mode `"smart"`
 
 ```js
-\tvar foo = "blah blah";
-\t\svar foo = "blah blah";
-\s\s\s\svar foo = "blah blah";
+\tvar foo = 'blah blah';
+\t\svar foo = 'blah blah';
+\s\s\s\svar foo = 'blah blah';
 \t/**
 \t\s*
 \t\s*\/ //a single space to align the star in a multi-line comment is allowed
@@ -262,7 +262,7 @@ JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
 ##### Invalid example for mode `"smart"`
 
 ```js
-\s\tsvar foo = "blah blah";
+\s\tsvar foo = 'blah blah';
 ```
 
 
@@ -285,13 +285,13 @@ JSHint: [`trailing`](http://jshint.com/docs/options/#trailing)
 ##### Valid
 
 ```js
-var foo = "blah blah";
+var foo = 'blah blah';
 ```
 
 ##### Invalid
 
 ```js
-var foo = "blah blah"; //<-- whitespace character here
+var foo = 'blah blah'; //<-- whitespace character here
 ```
 
 
@@ -313,14 +313,14 @@ JSHint: [`es3`](http://jshint.com/docs/options/#es3)
 
 ```js
 var foo = [1, 2, 3];
-var bar = {a: "a", b: "b"}
+var bar = {a: 'a', b: 'b'}
 ```
 
 ##### Invalid
 
 ```js
 var foo = [1, 2, 3, ];
-var bar = {a: "a", b: "b", }
+var bar = {a: 'a', b: 'b', }
 ```
 
 
@@ -1068,7 +1068,6 @@ Values:
 
 ```js
 "requirePaddingNewLinesAfterBlocks": true
-}
 ```
 
 ##### Valid
