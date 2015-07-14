@@ -13,11 +13,11 @@ Value: `true`
 ##### Valid
 
 ```js
-var a = function(){
+var a = function() {
 
 };
 
-$('#foo').click(function(){
+$('#foo').click(function() {
 
 })
 ```
@@ -25,11 +25,11 @@ $('#foo').click(function(){
 ##### Invalid
 
 ```js
-var a = function foo(){
+var a = function foo() {
 
 };
 
-$('#foo').click(function bar(){
+$('#foo').click(function bar() {
 
 });
 ```
@@ -61,17 +61,6 @@ var abc = function() {};
 
 ```js
 if (true) {doSomething();}
-```
-
-##### Valid for mode `1`
-
-```js
-if (true) {
-    doSomething();
-    doSomethingElse();
-}
-if (true) { doSomething(); }
-var abc = function() {};
 ```
 
 ##### Invalid
@@ -138,95 +127,79 @@ var snake_case = { snake_case: 6 };
 ```
 
 
-Requires the first alphabetical character of a comment to be uppercase, unless it is part of a multi-line textblock.
-
-By default, the prefix for inline comments `jscs` is ignored.
+Requires newline before line comments
 
 Types: `Boolean` or `Object`
 
 Values:
+- `true`: always require a newline before line comments
+- `Object`:
+     - `"allExcept"`: `"firstAfterCurly"` Comments may be first line of block without extra padding
+
+#### Examples
+```js
+"requirePaddingNewLinesBeforeLineComments": true
+"requirePaddingNewLinesBeforeLineComments": { "allExcept": "firstAfterCurly" }
+```
+
+##### Valid for `true`
+
+```js
+var a = 2;
+var b = 3; // comment
+
+// comment
+return a;
+
+function() {
+
+  // comment
+}
+```
+
+##### Invalid
+
+```js
+var a = 2;
+//comment
+return a;
+
+function() {
+  // comment
+}
+```
+
+
+Requires that a line comment (`//`) be followed by a space.
+
+Types: `Boolean`, `Object` or `String`
+
+Values:
  - `true`
+ - `"allowSlash"` (*deprecated* use `"allExcept": ["/"]`) allows `/// ` format
  - `Object`:
-    - `allExcept`: array of quoted exceptions
+    - `allExcept`: array of allowed strings before space `//(here) `
 
 #### Example
 
-`"requireCapitalizedComments": true`
-
-Valid:
-
-```
-// Valid
-//Valid
-
-/*
-  Valid
- *\/
-
-/**
- * Valid
- *\/
-
-// A textblock is a set of lines
-// that starts with a capitalized letter
-// and has one or more non-capitalized lines
-// afterwards
-
-// A textblock may also have multiple lines.
-// Those lines can be uppercase as well to support
-// sentense breaks in textblocks
-
-// 123 or any non-alphabetical starting character
-// @are also valid anywhere
+```js
+"requireSpaceAfterLineComment": { "allExcept": ["#", "="] }
 ```
 
-Invalid:
-```
-// invalid
-//invalid
-/** invalid *\/
-/**
- * invalid
- *\/
-```
+##### Valid
 
 ```js
-"requireCapitalizedComments": { "allExcept": ["jshint"] }
+// A comment
+/*A comment*\/
+//# sourceURL=filename.js
+//= require something
 ```
 
-Valid:
+##### Invalid
 
+```js
+//A comment
 ```
-function sayHello() {
-    \/* jshint: -W071 *\/
-
-    // I can now say hello in lots of statements, if I like.
-    return "Hello";
-}
-```
-
-* Invalid:
-
-```
-function sayHello() {
-    \/* jshint: -W071 *\/
-
-    // i can now say hello in lots of statements, if I like.
-    return "Hello";
-}
-```
-
-* Invalid:
-
-```
-function sayHello() {
-    \/* istanbul ignore next *\/
-
-    // I'd like to ignore this statement in coverage reports.
-    return "Hello";
-}
-```
-
 
 
 Requires constructors to be capitalized (except for `this`)
@@ -282,7 +255,6 @@ var x = {
     one: 1,
     two: 2
 };
-var y = { three: 3, four: 4};
 ```
 
 ##### Invalid
@@ -430,86 +402,8 @@ var a = b['camelCased_'];
 var a = b['c'];
 ```
 
-#### Example for `"es3": false` or `"es3": null`
 
-```js
-"requireDotNotation": true,
-"es3": false
-```
-
-##### Valid
-
-```js
-var a = b[c];
-var a = b.c;
-var a = b[c.d];
-var a = b[1];
-var a = b.while;
-```
-
-##### Invalid
-
-```js
-var a = b['c'];
-var a = b['while']; // reserved words can be property names in ES5
-```
-
-
-
-Requires function declarations by disallowing assignment of functions
-expressions to variables. Function expressions are allowed in all other
-contexts, including when passed as function arguments or immediately invoked.
-
-Assignment of function expressions to object members is also permitted, since
-these can't be declared.
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requireFunctionDeclarations": true
-```
-
-##### Valid
-
-```js
-function declared() {
-
-};
-
-(function iife() {
-    void 0;
-})();
-
-var obj = {
-    a: function () {}
-};
-
-obj.b = function () { };
-
-$('#foo').click(function bar() {
-
-};)
-```
-
-##### Invalid
-
-```js
-var expressed = function() {
-
-};
-
-var expressed = function deeply() {
-
-};
-```
-
-
-
-Requires placing keywords on a new line.
+Disallows placing keywords on a new line.
 
 Type: `Array`
 
@@ -526,8 +420,7 @@ Values: Array of quoted keywords
 ```js
 if (x < 0) {
     x++;
-}
-else {
+} else {
     x--;
 }
 ```
@@ -537,7 +430,8 @@ else {
 ```js
 if (x < 0) {
     x++;
-} else {
+}
+else {
     x--;
 }
 ```
@@ -559,9 +453,6 @@ Value: `true`
 ##### Valid
 
 ```js
-var abc = 8;
-var foo = 5;
-
 var a, b, c,
     foo = 7,
     bar = 8;
@@ -628,39 +519,6 @@ var y = 2;
 ```
 
 
-Require unassigned functions to be named inline
-
-Types: `Boolean` or `Object`
-
-Values:
- - `true`
- - `Object`:
-    - `allExcept`: array of quoted identifiers
-
-#### Example
-
-```js
-"requireNamedUnassignedFunctions": { "allExcept": ["describe", "it"] }
-```
-
-##### Valid
-
-```js
-[].forEach(function x() {});
-var y = function() {};
-function z() {}
-it(function () {});
-```
-
-##### Invalid
-
-```js
-[].forEach(function () {});
-before(function () {});
-```
-
-
-
 Requires operators to appear before line breaks and not after.
 
 Types: `Array` or `Boolean`
@@ -703,6 +561,83 @@ x = y ?
 ```js
 x = y
     ? 1 : 2;
+```
+
+
+Disallows sticking binary operators to the right.
+
+Types: `Array` or `Boolean`
+
+Values: Array of quoted operators or `true` to require space after all possible binary operators
+
+#### Example
+
+```js
+"requireSpaceAfterBinaryOperators": [
+    "=",
+    ",",
+    "+",
+    "-",
+    "/",
+    "*",
+    "==",
+    "===",
+    "!=",
+    "!=="
+    // etc
+]
+```
+
+##### Valid
+
+```js
+x + y;
+```
+
+##### Invalid
+
+```js
+x +y;
+```
+
+
+
+Disallows sticking binary operators to the left.
+
+Types: `Array` or `Boolean`
+
+Values: Array of quoted operators or `true` to require space before all possible binary operators
+without comma operator, since it's rarely used with this rule
+
+
+#### Example
+
+```js
+"requireSpaceBeforeBinaryOperators": [
+    "=",
+    ",",
+    "+",
+    "-",
+    "/",
+    "*",
+    "==",
+    "===",
+    "!=",
+    "!=="
+    // etc
+]
+```
+
+##### Valid
+
+```js
+x !== y;
+```
+
+##### Invalid
+
+```js
+x!== y;
 ```
 
 
@@ -801,38 +736,6 @@ function () {
 }
 ```
 
-##### Valid for `{ "allExcept": ["inCallExpressions"] }`
-
-```js
-func(
-    2,
-    3,
-    function() {
-    }
-);
-```
-
-##### Valid for `{ "allExcept": ["inArrayExpressions"] }`
-
-```js
-var foo = [
-    2,
-    3,
-    function() {
-    }
-];
-```
-#### Valid for `{ "allExcept": ["inProperties"] }`
-
-```js
-var foo = {
-    a: 2,
-    b: function() {
-    },
-    c: 3
-];
-```
-
 ##### Invalid
 
 ```js
@@ -845,63 +748,6 @@ function () {
     }
 }
 ```
-
-
-
-Requires a blank line after `'use strict';` statements
-
-Values: `true`
-
-#### Example
-
-```js
-"requirePaddingNewLinesAfterUseStrict": true
-```
-
-##### Valid
-
-```js
-'use strict';
-
-// code
-```
-
-##### Invalid
-
-```js
-'use strict';
-// code
-```
-
-
-
-Requires newline before module.exports
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requirePaddingNewLinesBeforeExport": true
-```
-
-##### Valid
-
-```js
-var a = 2;
-
-module.exports = a;
-```
-
-##### Invalid
-
-```js
-var a = 2;
-module.exports = a;
-```
-
 
 
 Requires an empty line above the specified keywords unless the keyword is the first expression in a block.
@@ -966,64 +812,6 @@ function(a) {
 ```
 
 
-
-Requires newline before line comments
-
-Types: `Boolean` or `Object`
-
-Values:
-- `true`: always require a newline before line comments
-- `Object`:
-     - `"allExcept"`: `"firstAfterCurly"` Comments may be first line of block without extra padding
-
-#### Examples
-```js
-"requirePaddingNewLinesBeforeLineComments": true
-"requirePaddingNewLinesBeforeLineComments": { "allExcept": "firstAfterCurly" }
-```
-
-##### Valid for `true`
-
-```js
-var a = 2;
-var b = 3; // comment
-
-// comment
-return a;
-
-function() {
-
-  // comment
-}
-```
-
-##### Valid for `{ "allExcept": "firstAfterCurly" }`
-
-```js
-var a = 2;
-
-// comment
-return a;
-
-function() {
-  // comment
-}
-```
-
-##### Invalid
-
-```js
-var a = 2;
-//comment
-return a;
-
-function() {
-  // comment
-}
-```
-
-
-
 Requires blocks to begin and end with 2 newlines
 
 Types: `Boolean` or `Integer`
@@ -1057,22 +845,6 @@ if (true) {
 }
 ```
 
-##### Valid for mode `1`
-
-```js
-if (true) {
-
-    doSomething();
-    doSomethingElse();
-
-}
-if (true) {
-    doSomething();
-}
-if (true) { doSomething(); }
-var abc = function() {};
-```
-
 ##### Invalid
 
 ```js
@@ -1082,7 +854,6 @@ if (true) {
     doSomethingElse();
 }
 ```
-
 
 
 Requires newline inside curly braces of all objects.
@@ -1186,45 +957,6 @@ var a = 1
 ```
 
 
-
-Disallows sticking binary operators to the right.
-
-Types: `Array` or `Boolean`
-
-Values: Array of quoted operators or `true` to require space after all possible binary operators
-
-#### Example
-
-```js
-"requireSpaceAfterBinaryOperators": [
-    "=",
-    ",",
-    "+",
-    "-",
-    "/",
-    "*",
-    "==",
-    "===",
-    "!=",
-    "!=="
-    // etc
-]
-```
-
-##### Valid
-
-```js
-x + y;
-```
-
-##### Invalid
-
-```js
-x +y;
-```
-
-
-
 Requires space after keyword.
 
 Types: `Array` or `Boolean`
@@ -1264,80 +996,6 @@ return true;
 if(x) {
     x++;
 }
-```
-
-
-
-Requires that a line comment (`//`) be followed by a space.
-
-Types: `Boolean`, `Object` or `String`
-
-Values:
- - `true`
- - `"allowSlash"` (*deprecated* use `"allExcept": ["/"]`) allows `/// ` format
- - `Object`:
-    - `allExcept`: array of allowed strings before space `//(here) `
-
-#### Example
-
-```js
-"requireSpaceAfterLineComment": { "allExcept": ["#", "="] }
-```
-
-##### Valid
-
-```js
-// A comment
-/*A comment*\/
-//# sourceURL=filename.js
-//= require something
-```
-
-##### Invalid
-
-```js
-//A comment
-```
-
-
-
-
-Disallows sticking binary operators to the left.
-
-Types: `Array` or `Boolean`
-
-Values: Array of quoted operators or `true` to require space before all possible binary operators
-without comma operator, since it's rarely used with this rule
-
-
-#### Example
-
-```js
-"requireSpaceBeforeBinaryOperators": [
-    "=",
-    ",",
-    "+",
-    "-",
-    "/",
-    "*",
-    "==",
-    "===",
-    "!=",
-    "!=="
-    // etc
-]
-```
-
-##### Valid
-
-```js
-x !== y;
-```
-
-##### Invalid
-
-```js
-x!== y;
 ```
 
 
@@ -1476,45 +1134,6 @@ a(b,c);
 ```
 
 
-
-Requires space before `()` or `{}` in anonymous function expressions.
-
-Type: `Object`
-
-Values: `"beforeOpeningRoundBrace"` and `"beforeOpeningCurlyBrace"` as child properties.
-Child properties must be set to `true`.
-
-#### Example
-
-```js
-"requireSpacesInAnonymousFunctionExpression": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
-}
-```
-
-##### Valid
-
-```js
-var foo = function () {};
-var Foo = {
-    foo: function () {};
-}
-array.map(function () {});
-```
-
-##### Invalid
-
-```js
-var foo = function() {};
-var Foo = {
-    foo: function (){};
-}
-array.map(function(){});
-```
-
-
-
 Requires space before and/or after `?` or `:` in conditional expressions.
 
 Types: `Object` or `Boolean`
@@ -1638,47 +1257,6 @@ var x = [1];
 ```
 
 
-
-Requires space after opening square bracket and before closing.
-
-Types: `Boolean` or `Object`
-
-Values: `true` for strict mode, or `"allExcept": [ "[", "]"]`
-ignores closing brackets in a row.
-
-#### Example
-
-```js
-"requireSpacesInsideBrackets": true
-
-// or
-
-"requireSpacesInsideBrackets": {
-    "allExcept": [ "[", "]", "{", "}" ]
-}
-```
-
-##### Valid for mode `true`
-
-```js
-var x = [ 1 ];
-```
-
-##### Valid for mode `{ allExcept": [ "[", "]", "{", "}" ] }`
-
-```js
-var x = [[ 1 ], [ 2 ]];
-var x = [{ a: 1 }, { b: 2}];
-```
-
-##### Invalid
-
-```js
-var x = [1];
-```
-
-
-
 Requires space after opening object curly brace and before closing.
 
 Types: `Object` or `String`
@@ -1701,19 +1279,6 @@ ignores closing brackets in a row.
 
 ```js
 var x = { a: { b: 1 } };
-```
-
-##### Valid for mode `"allButNested"`
-
-```js
-var x = { a: { b: 1 }};
-```
-
-##### Valid for mode `"allExcept": [ "}", ")" ]`
-
-```js
-var x = { a: (b ? 1 : 2)};
-var x = { a: { b: 1 }};
 ```
 
 ##### Invalid
@@ -1765,54 +1330,6 @@ var x = Math.pow(1 + 2, 3 + 4);
 ```
 
 
-
-Requires an extra comma following the final element of an array or object literal.
-
-Types: `Boolean` or `Object`
-
-Values:
-
-- `true`: validates all arrays and objects
-- `Object`:
-    - `ignoreSingleValue`: allows single property objects and single element arrays to not require a trailing comma
-    - `ignoreSingleLine`: allows objects and arrays on a single line to not require a trailing comma
-
-#### Example
-
-```js
-"requireTrailingComma": true
-```
-
-##### Valid
-
-```js
-var foo = [1, 2, 3,];
-var bar = {a: "a", b: "b",}
-```
-
-##### Valid with ignoreSingleValue
-
-```js
-var car = [1];
-var dar = {a: "a"};
-```
-
-##### Valid with ignoreSingleLine
-
-```js
-var car = [1, 2, 3];
-var dar = {a: "a", b: "b"};
-```
-
-##### Invalid
-
-```js
-var foo = [1, 2, 3];
-var bar = {a: "a", b: "b"}
-```
-
-
-
 Requires the variable to be the right hand operator when doing a boolean comparison
 
 Type: `Boolean`
@@ -1841,32 +1358,6 @@ if (a == 1) {
 ```
 
 
-Option to check `var that = this` expressions
-
-Types: `Array` or `String`
-
-Values: String value used for context local declaration
-
-#### Example
-
-```js
-"safeContextKeyword": ["that"]
-```
-
-##### Valid
-
-```js
-var that = this;
-```
-
-##### Invalid
-
-```js
-var _this = this;
-```
-
-
-
 Validates proper alignment of function parameters.
 
 Type: `Object` or `Boolean`
@@ -1883,6 +1374,7 @@ Values: `"lineBreakAfterOpeningBraces"`, `"lineBreakBeforeClosingBraces"` as chi
 ```
 
 ##### Valid
+
 ```js
 function (
   thisIs,
@@ -1890,98 +1382,13 @@ function (
   ofParametersEverWritten
 ) {}
 ```
+
 ##### Invalid
+
 ```js
 function (thisIs,
           theLongestList,
           ofParametersEverWritten) {}
-```
-
-
-
-Validates indentation for switch statements and block statements
-
-Types: `Integer`, `String` or `Object`
-
-Values:
- - `Integer`: A positive number of spaces
- - `String`: `"\t"` for tab indentation
- - `Object`:
-    - `value`: (required) the same effect as the non-object values
-    - `includeEmptyLines`: (default: `false`) require empty lines to be indented
-
-JSHint: [`indent`](http://jshint.com/docs/options/#indent)
-
-#### Example
-
-```js
-"validateIndentation": "\t"
-```
-
-##### Valid example for mode `2`
-
-```js
-if (a) {
-  b=c;
-  function(d) {
-    e=f;
-  }
-}
-```
-
-##### Invalid example for mode `2`
-
-```js
-if (a) {
-   b=c;
-function(d) {
-       e=f;
-}
-}
-```
-
-##### Valid example for mode `"\t"`
-
-```js
-if (a) {
-    b=c;
-    function(d) {
-        e=f;
-    }
-}
-```
-
-##### Invalid example for mode `"\t"`
-
-```js
-if (a) {
-     b=c;
-function(d) {
-           e=f;
- }
-}
-```
-
-##### Valid example for mode `{ "value": "\t", "includeEmptyLines": true }`
-```js
-if (a) {
-    b=c;
-    function(d) {
-        e=f;
-    }
-
-} // single tab character on previous line
-```
-
-##### Invalid example for mode `{ "value": "\t", "includeEmptyLines": true }`
-```js
-if (a) {
-    b=c;
-    function(d) {
-        e=f;
-    }
-
-} // no tab character on previous line
 ```
 
 
@@ -2009,88 +1416,6 @@ x++;
 var x = 1;<CRLF>
 x++;
 ```
-
-
-Requires each element in array on a single line when array length is more than passed maximum
-number or array fills more than one line.
-Set `ignoreBrackets` to `true` to allow elements on the same line with brackets.
-
-Type: `Boolean` or `Number` (maximum) or `Object` (`{maximum: Number, ignoreBrackets: Boolean}`)
-
-Values: `true`
-
-Default: `{maximum: Infinity, ignoreBrackets: false}`
-
-#### Example
-
-```js
-"validateNewlineAfterArrayElements": {
-  "maximum": 3
-}
-```
-
-##### Valid for `true`
-
-```js
-var x = [{a: 1}, [2], '3', 4, 5, 6];
-var x = [
-  {a: 1},
-  [2],
-  '3',
-  4
-];
-```
-
-##### Invalid for `true`
-
-```js
-var x = [1,
-  2];
-```
-
-##### Valid for `3`
-
-```js
-var x = [{a: 1}, [2], '3'];
-var x = [
-  1,
-  2,
-  3,
-  4
-];
-```
-
-##### Invalid for `3`
-
-```js
-var x = [1, 2, 3, 4];
-var x = [1,
-  2,
-  3];
-var x = [
-    1, 2
-];
-```
-
-##### Valid for `{maximum: 2, ignoreBrackets: true}`
-
-```js
-var x = [{a: 1}, [2]];
-var x = [1,
-  2,
-  3];
-```
-
-##### Invalid for `{maximum: 2, ignoreBrackets: true}`
-
-```js
-var x = [1, 2, 3];
-var x = [1, 2,
-  3];
-var x = [1,
-  2, 3];
-```
-
 
 
 Enable validation of separators between function parameters. Will ignore newlines.
@@ -2123,57 +1448,493 @@ function a(b , c) {}
 ```
 
 
+Disallows empty blocks (except for catch blocks).
 
-Requires all quote marks to be either the supplied value, or consistent if `true`
+Type: `Boolean`
 
-Types: `Boolean`, `String` or `Object`
+Value: `true`
 
-Values:
- - `"\""`: all strings require double quotes
- - `"'"`: all strings require single quotes
- - `true`: all strings require the quote mark first encountered in the source code
- - `Object`:
-    - `escape`: allow the "other" quote mark to be used, but only to avoid having to escape
-    - `mark`: the same effect as the non-object values
-
-JSHint: [`quotmark`](http://jshint.com/docs/options/#quotmark)
+JSHint: [`noempty`](http://jshint.com/docs/options/#noempty)
 
 #### Example
 
 ```js
-"validateQuoteMarks": "\""
-```
-```js
-"validateQuoteMarks": { "mark": "\"", "escape": true }
+"disallowEmptyBlocks": true
 ```
 
-##### Valid example for mode `{ "mark": "\"", "escape": true }`
+##### Valid
 
 ```js
-var x = "x";
-var y = '"x"';
-```
-##### Invalid example for mode `{ "mark": "\"", "escape": true }`
-
-```js
-var x = "x";
-var y = 'x';
+if ( a == b ) { c = d; }
+try { a = b; } catch( e ){}
 ```
 
-##### Valid example for mode `"\""` or mode `true`
+##### Invalid
 
 ```js
-var x = "x";
+if ( a == b ) { } else { c = d; }
 ```
 
-##### Valid example for mode `"'"` or mode `true`
+Disallows placing keywords on a new line.
+
+Type: `Array`
+
+Values: Array of quoted keywords
+
+#### Example
 
 ```js
-var x = 'x';
+"disallowKeywordsOnNewLine": ["else"]
+```
+
+##### Valid
+
+```js
+if (x < 0) {
+    x++;
+} else {
+    x--;
+}
+```
+
+##### Invalid
+
+```js
+if (x < 0) {
+    x++;
+}
+else {
+    x--;
+}
+```
+
+
+Requires lines to not contain both spaces and tabs consecutively,
+or spaces after tabs only for alignment if "smart"
+
+Types: `Boolean` or `String`
+
+Values: `true` or `"smart"`
+
+JSHint: [`smarttabs`](http://www.jshint.com/docs/options/#smarttabs)
+
+#### Example
+
+```js
+"disallowMixedSpacesAndTabs": true
+```
+
+##### Valid example for mode `true`
+
+```js
+\tvar foo = "blah blah";
+\s\s\s\svar foo = "blah blah";
+\t/**
+\t\s*
+\t\s*\/ //a single space to align the star in a multi-line comment is allowed
 ```
 
 ##### Invalid example for mode `true`
 
 ```js
-var x = "x", y = 'y';
+\t\svar foo = "blah blah";
+\s\tsvar foo = "blah blah";
 ```
+
+##### Valid example for mode `"smart"`
+
+```js
+\tvar foo = "blah blah";
+\t\svar foo = "blah blah";
+\s\s\s\svar foo = "blah blah";
+\t/**
+\t\s*
+\t\s*\/ //a single space to align the star in a multi-line comment is allowed
+```
+
+##### Invalid example for mode `"smart"`
+
+```js
+\s\tsvar foo = "blah blah";
+```
+
+
+Disallows multiple blank lines in a row.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowMultipleLineBreaks": true
+```
+
+##### Valid
+```js
+var x = 1;
+
+x++;
+```
+
+##### Invalid
+```js
+var x = 1;
+
+
+x++;
+```
+
+
+Disallows multiple indentation characters (tabs or spaces) between identifiers, keywords, and any other token
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowMultipleSpaces": true
+```
+
+##### Valid
+```js
+var x = "hello";
+function y() {}
+```
+
+##### Invalid
+```js
+var x  = "hello";
+function  y() {}
+```
+
+
+
+Disallows unassigned functions to be named inline
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowNamedUnassignedFunctions": true
+```
+
+##### Valid
+```js
+[].forEach(function () {});
+var x = function() {};
+function y() {}
+```
+
+##### Invalid
+```js
+[].forEach(function x() {});
+```
+
+
+Disallows newline before opening curly brace of all block statements.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowNewlineBeforeBlockStatements": true
+```
+
+##### Valid
+
+```js
+function good(){
+    var obj = {
+        val: true
+    };
+
+    return {
+        data: obj
+    };
+}
+
+if (cond){
+    foo();
+}
+
+for (var e in elements){
+    bar(e);
+}
+
+while (cond){
+    foo();
+}
+```
+
+##### Invalid
+
+```js
+function bad()
+{
+    var obj =
+    {
+        val: true
+    };
+
+    return {
+        data: obj
+    };
+}
+
+if (cond)
+{
+    foo();
+}
+
+for (var e in elements)
+{
+    bar(e);
+}
+
+while (cond)
+{
+    foo();
+}
+```
+
+
+Requires putting certain operators on the next line rather than on the current line before a line break.
+
+Types: `Array` or `Boolean`
+
+Values: Array of operators to apply to or `true`
+
+#### Example
+
+```js
+"disallowOperatorBeforeLineBreak": ["+", "."]
+```
+
+##### Valid
+
+```js
+$el.on( 'click', fn )
+	.appendTo( 'body' );
+
+var x = 4 + 5
+	+ 12 + 13;
+```
+
+##### Invalid
+
+```js
+$el.on( 'click', fn ).
+	appendTo( 'body' );
+
+var x = 4 + 5 +
+	12 + 13;
+```
+
+
+Disallows quoted keys in object if possible.
+
+Types: `String` or `Boolean`
+
+Values:
+
+ - `true` for strict mode
+ - `"allButReserved"` allows ES3+ reserved words to remain quoted which is helpful
+   when using this option with JSHint's `es3` flag.
+
+#### Example
+
+```js
+"disallowQuotedKeysInObjects": true
+```
+
+##### Valid for mode `true`
+
+```js
+var x = { a: { default: 1 } };
+```
+
+##### Valid for mode `"allButReserved"`
+
+```js
+var x = {a: 1, 'default': 2};
+```
+
+##### Invalid
+
+```js
+var x = {'a': 1};
+```
+
+
+Disallows space after object keys.
+
+Types: `Boolean` or `String`
+
+Values:
+ - `true`
+ - `"ignoreSingleLine"` ignores objects if the object only takes up a single line
+ - `"ignoreMultiLine"` ignores objects if the object takes up multiple lines
+
+#### Example
+
+```js
+"disallowSpaceAfterObjectKeys": true
+```
+
+##### Valid
+```js
+var x = {a: 1};
+```
+##### Invalid
+```js
+var x = {a : 1};
+```
+
+
+Requires sticking unary operators to the left.
+
+Types: `Array` or `Boolean`
+
+Values: Array of quoted operators or `true` to disallow space before postfix for all unary operators
+(i.e. increment/decrement operators)
+
+#### Example
+
+```js
+"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"]
+```
+
+##### Valid
+
+```js
+x = y++; y = z--;
+```
+
+##### Invalid
+
+```js
+x = y ++; y = z --;
+```
+
+Disallows space before `()` in call expressions.
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowSpacesInCallExpression": true
+```
+
+##### Valid
+
+```js
+var x = foobar();
+```
+
+##### Invalid
+
+```js
+var x = foobar ();
+```
+
+
+
+Disallows an extra comma following the final element of an array or object literal.
+
+Type: `Boolean`
+
+Value: `true`
+
+JSHint: [`es3`](http://jshint.com/docs/options/#es3)
+
+#### Example
+
+```js
+"disallowTrailingComma": true
+```
+
+##### Valid
+
+```js
+var foo = [1, 2, 3];
+var bar = {a: "a", b: "b"}
+```
+
+##### Invalid
+
+```js
+var foo = [1, 2, 3, ];
+var bar = {a: "a", b: "b", }
+```
+
+
+Requires all lines to end on a non-whitespace character
+
+Types: `Boolean` or `String`
+
+Values:
+ - `true`
+ - `"ignoreEmptyLines"`: (default: `false`) allow whitespace on empty lines
+
+JSHint: [`trailing`](http://jshint.com/docs/options/#trailing)
+
+#### Example
+
+```js
+"disallowTrailingWhitespace": true
+```
+
+##### Valid
+
+```js
+var foo = "blah blah";
+```
+
+##### Invalid
+
+```js
+var foo = "blah blah"; //<-- whitespace character here
+```
+
+
+Requires the variable to be the left hand operator when doing a boolean comparison
+
+Type: `Boolean`
+
+Value: `true`
+
+#### Example
+
+```js
+"disallowYodaConditions": true
+```
+
+##### Valid
+
+```js
+if (a == 1) {
+    return
+}
+```
+
+##### Invalid
+
+```js
+if (1 == a) {
+    return
+}
+```
+
