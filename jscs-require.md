@@ -1,38 +1,3 @@
-
-Requires proper alignment in object literals.
-
-Type: `String`
-
-Values:
- - `"all"` for strict mode,
- - `"ignoreFunction"` ignores objects if one of the property values is a function expression,
- - `"ignoreLineBreak"` ignores objects if there are line breaks between properties
-
-#### Example
-
-```js
-"requireAlignedObjectValues": "all"
-```
-
-##### Valid
-```js
-var x = {
-    a   : 1,
-    bcd : 2,
-    ef  : 'str'
-};
-```
-##### Invalid
-```js
-var x = {
-    a : 1,
-    bcd : 2,
-    ef : 'str'
-};
-```
-
-
-
 Requires that a function expression be anonymous.
 
 Type: `Boolean`
@@ -696,77 +661,6 @@ before(function () {});
 
 
 
-Requires newline before opening curly brace of all block statements.
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requireNewlineBeforeBlockStatements": true
-```
-
-##### Valid
-
-```js
-function good()
-{
-    var obj =
-    {
-        val: true
-    };
-
-    return {
-        data: obj
-    };
-}
-
-if (cond)
-{
-    foo();
-}
-
-for (var e in elements)
-{
-    bar(e);
-}
-
-while (cond)
-{
-    foo();
-}
-```
-
-##### Invalid
-
-```js
-function bad(){
-    var obj = {
-        val: true
-    };
-
-    return {
-        data: obj
-    };
-}
-
-if (cond){
-    foo();
-}
-
-for (var e in elements){
-    bar(e);
-}
-
-while (cond){
-    foo();
-}
-```
-
-
-
 Requires operators to appear before line breaks and not after.
 
 Types: `Array` or `Boolean`
@@ -1259,33 +1153,6 @@ var d = function(){ return d; }.apply(this, args);
 ```
 
 
-
-Requires quoted keys in objects.
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requireQuotedKeysInObjects": true
-```
-
-##### Valid
-
-```js
- var x = { 'a': { "default": 1 } };
-```
-
-##### Invalid
-
-```js
-var x = { a: 1 };
-```
-
-
-
 Requires semicolon after:
 
 * var declaration
@@ -1432,54 +1299,6 @@ Values:
 //A comment
 ```
 
-
-
-Requires space after object keys.
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requireSpaceAfterObjectKeys": true
-```
-
-##### Valid
-```js
-var x = {a : 1};
-```
-##### Invalid
-```js
-var x = {a: 1};
-```
-
-
-
-Disallows sticking unary operators to the right.
-
-Types: `Array` or `Boolean`
-
-Values: Array of quoted operators or `true` to require space after prefix for all unary operators
-
-#### Example
-
-```js
-"requireSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"]
-```
-
-##### Valid
-
-```js
-x = ! y; y = ++ z;
-```
-
-##### Invalid
-
-```js
-x = !y; y = ++z;
-```
 
 
 
@@ -1632,34 +1451,6 @@ var x = {a:1};
 ```
 
 
-
-Disallows sticking unary operators to the left.
-
-Types: `Array` or `Boolean`
-
-Values: Array of quoted operators or `true` to require space before postfix for all unary operators
-(i.e. increment/decrement operators).
-
-#### Example
-
-```js
-"requireSpaceBeforePostfixUnaryOperators": ["++", "--"]
-```
-
-##### Valid
-
-```js
-x = y ++; y = z --;
-```
-
-##### Invalid
-
-```js
-x = y++; y = z--;
-```
-
-
-
 Ensure there are spaces after argument separators in call expressions.
 
 Type: `Boolean`
@@ -1720,32 +1511,6 @@ var Foo = {
     foo: function (){};
 }
 array.map(function(){});
-```
-
-
-
-Requires space before `()` in call expressions.
-
-Type: `Boolean`
-
-Value: `true`
-
-#### Example
-
-```js
-"requireSpacesInCallExpression": true
-```
-
-##### Valid
-
-```js
-var x = foobar ();
-```
-
-##### Invalid
-
-```js
-var x = foobar();
 ```
 
 
@@ -1824,149 +1589,6 @@ for(var i = 0; i<l;i++) {
 for(var i = 0;i<l; i++) {
     x++;
 }
-```
-
-
-Requires space before `()` or `{}` in function declarations.
-
-Type: `Object`
-
-Values: `"beforeOpeningRoundBrace"` and `"beforeOpeningCurlyBrace"` as child properties.
-Child properties must be set to `true`.
-
-#### Example
-
-```js
-"requireSpacesInFunctionDeclaration": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
-}
-```
-
-##### Valid
-
-```js
-function a () {}
-```
-
-##### Invalid
-
-```js
-function a() {}
-function a (){}
-function a(){}
-```
-
-
-
-Requires space before `()` or `{}` in function expressions (both [named](#requirespacesinnamedfunctionexpression)
-and [anonymous](#requirespacesinanonymousfunctionexpression)).
-
-Type: `Object`
-
-Values: `"beforeOpeningRoundBrace"` and `"beforeOpeningCurlyBrace"` as child properties.
-Child properties must be set to `true`.
-
-#### Example
-
-```js
-"requireSpacesInFunctionExpression": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
-}
-```
-
-##### Valid
-
-```js
-var x = function () {};
-var x = function a () {};
-```
-
-##### Invalid
-
-```js
-var x = function() {};
-var x = function (){};
-var x = function(){};
-var x = function a() {};
-var x = function a (){};
-var x = function a(){};
-```
-
-
-
-Expression
-
-Requires space before `()` or `{}` in function expressions (both [named](#requirespacesinnamedfunctionexpression)
-and [anonymous](#requirespacesinanonymousfunctionexpression)) and function declarations.
-
-Type: `Object`
-
-Values: `"beforeOpeningRoundBrace"` and `"beforeOpeningCurlyBrace"` as child properties.
-Child properties must be set to `true`.
-
-#### Example
-
-```js
-"requireSpacesInFunction": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
-}
-```
-
-##### Valid
-
-```js
-var x = function () {};
-var x = function a () {};
-function a () {}
-```
-
-##### Invalid
-
-```js
-var x = function() {};
-var x = function (){};
-var x = function(){};
-var x = function a() {};
-var x = function a (){};
-var x = function a(){};
-function a() {}
-function a (){}
-function a(){}
-```
-
-
-
-Requires space before `()` or `{}` in named function expressions.
-
-Type: `Object`
-
-Values: `"beforeOpeningRoundBrace"` and `"beforeOpeningCurlyBrace"` as child properties.
-Child properties must be set to `true`.
-
-#### Example
-
-```js
-"requireSpacesInNamedFunctionExpression": {
-    "beforeOpeningRoundBrace": true,
-    "beforeOpeningCurlyBrace": true
-}
-```
-
-##### Valid
-
-```js
-var x = function a () {};
-```
-
-##### Invalid
-
-```js
-var x = function a() {};
-var x = function a (){};
-var x = function a(){};
 ```
 
 
