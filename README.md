@@ -1,1 +1,1 @@
-Requires and disallows for jscs.
+airbnb jscsrc preset.
