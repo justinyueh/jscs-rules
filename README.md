@@ -1,14 +1,14 @@
 # jscs-rules
 
-> Verify JavaScript code with jscs.
+> Verify JavaScript code style with jscs.
 
-## Getting Started
-This plugin requires Grunt `~0.4.5`
+[See JavaScript Code Style rules](https://github.com/felixyale/jscs-rules/blob/master/jscs-rules.md)
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 How to use
 ----------------------------
+
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, once you're familiar with that process, you may run this command:
 
 ```bash
 git clone git://github.com/felixyale/jscs-rules.git
