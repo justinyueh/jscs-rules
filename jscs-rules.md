@@ -1,3 +1,5 @@
+# JavaScript Code Style Rules
+
 Disallows empty blocks (except for catch blocks).
 
 Type: `Boolean`
