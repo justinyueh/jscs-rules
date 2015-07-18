@@ -11,7 +11,7 @@ How to use
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, once you're familiar with that process, you may run this command:
 
 ```bash
-git clone git://github.com/felixyale/jscs-rules.git
+git clone https://github.com/felixyale/jscs-rules.git
 ```
 
 Enter the base directory and run the build script:

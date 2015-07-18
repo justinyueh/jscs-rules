@@ -17,13 +17,17 @@ JSHint: [`noempty`](http://jshint.com/docs/options/#noempty)
 ##### Valid
 
 ```js
-if ( a == b ) { c = d; }
+if (a == b) {
+  c = d;
+}
 ```
 
 ##### Invalid
 
 ```js
-if ( a == b ) { } else { c = d; }
+if (a == b) { } else {
+  c = d;
+}
 ```
 
 
@@ -98,13 +102,20 @@ Values:
 ##### Valid for mode `true`
 
 ```js
-var x = { a: { default: 1 } };
+var x = {
+  a: {
+    default: 1
+  }
+};
 ```
 
 ##### Valid for mode `"allButReserved"`
 
 ```js
-var x = {a: 1, 'default': 2};
+var x = {
+  a: 1,
+  'default': 2
+};
 ```
 
 ##### Invalid
@@ -132,11 +143,15 @@ Values:
 
 ##### Valid
 ```js
-var x = {a: 1};
+var x = {
+  a: 1
+};
 ```
 ##### Invalid
 ```js
-var x = {a : 1};
+var x = {
+  a : 1
+};
 ```
 
 
@@ -155,13 +170,15 @@ Values: Array of quoted operators or `true` to disallow space after prefix for a
 ##### Valid
 
 ```js
-x = !y; y = ++z;
+x = !y;
+y = ++z;
 ```
 
 ##### Invalid
 
 ```js
-x = ! y; y = ++ z;
+x = ! y;
+y = ++ z;
 ```
 
 
@@ -181,13 +198,15 @@ Values: Array of quoted operators or `true` to disallow space before postfix for
 ##### Valid
 
 ```js
-x = y++; y = z--;
+x = y++;
+y = z--;
 ```
 
 ##### Invalid
 
 ```js
-x = y ++; y = z --;
+x = y ++;
+y = z --;
 ```
 
 
@@ -315,14 +334,20 @@ JSHint: [`es3`](http://jshint.com/docs/options/#es3)
 
 ```js
 var foo = [1, 2, 3];
-var bar = {a: 'a', b: 'b'}
+var bar = {
+  a: 'a',
+  b: 'b'
+};
 ```
 
 ##### Invalid
 
 ```js
 var foo = [1, 2, 3, ];
-var bar = {a: 'a', b: 'b', }
+var bar = {
+  a: 'a',
+  b: 'b',
+}
 ```
 
 
@@ -611,7 +636,6 @@ var x = {
     one: 1,
     two: 2
 };
-var y = { three: 3, four: 4};
 ```
 
 ##### Invalid
@@ -893,7 +917,7 @@ Value: `true` to requires spaces inbetween for statement.
 ##### Valid
 
 ```js
-for(var i = 0; i<l; i++) {
+for (var i = 0; i < l; i++) {
     x++;
 }
 ```
