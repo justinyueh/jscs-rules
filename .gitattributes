@@ -1,2 +1,5 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
-* .js eol=lf
+# Force Unix line endings for most file formats (except binary files)
+*.js    text  eol=lf
+*.css   text  eol=lf
+*.html  text  eol=lf
+*.md    text  eol=lf
