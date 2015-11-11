@@ -24,6 +24,8 @@ Once packages has been installed, it may be enabled inside your Gruntfile with t
 
 ```js
 grunt
+
+or
+
+gulp
 ```
-
-
